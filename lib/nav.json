@@ -1,0 +1,43 @@
+{
+  "menuItems": [
+    {
+      "label": "Clothing",
+      "href": "#"
+    },
+    {
+      "label": "Electronics",
+      "href": "#"
+    },
+    {
+      "label": "Home & Kitchen",
+      "href": "#"
+    },
+    {
+      "label": "Books",
+      "href": "#"
+    },
+    {
+      "label": "Baby",
+      "href": "#"
+    },
+    {
+      "label": "Automotive",
+      "href": "#"
+    }
+  ],
+  "accountActions": [
+    {
+      "label": "Sign in",
+      "href": "#"
+    },
+    {
+      "label": "Create account",
+      "href": "#"
+    }
+  ],
+  "shoppingCart": {
+    "label": "Shopping cart",
+    "href": "#",
+    "itemsCount": 3
+  }
+}
