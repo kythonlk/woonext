@@ -32,7 +32,7 @@ export default function Navigation() {
               type="search"
             />
             <Button type="submit" variant="outline">
-              <SearchIcon className="h4 w-4" />
+              <SearchIcon className="h-4 w-4" />
             </Button>
           </form>
         </div>
@@ -47,10 +47,10 @@ export default function Navigation() {
             </Link>
           ))}
           <Link
-            className="rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-100/50 dark:bg-gray-800 dark:hover:bg-gray-800/50"
+            className="rounded-lg flex items-center justify-center"
             href={navData.shoppingCart.href}
           >
-            <ShoppingCartIcon className="h-6 w-6" />
+            <ShoppingCartIcon className="h-6 w-6 hover:bg-gray-100 bg-gray-100 rounded-lg" />
             <Badge className="ml-auto mb-4">
               {navData.shoppingCart.itemsCount}
             </Badge>
