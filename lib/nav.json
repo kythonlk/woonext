@@ -9,14 +9,6 @@
       "href": "#"
     },
     {
-      "label": "Home & Kitchen",
-      "href": "#"
-    },
-    {
-      "label": "Books",
-      "href": "#"
-    },
-    {
       "label": "Baby",
       "href": "#"
     },
@@ -31,13 +23,13 @@
       "href": "#"
     },
     {
-      "label": "Create account",
+      "label": "Sign up",
       "href": "#"
     }
   ],
   "shoppingCart": {
     "label": "Shopping cart",
     "href": "#",
-    "itemsCount": 3
+    "itemsCount": 0
   }
 }
