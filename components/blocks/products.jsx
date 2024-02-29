@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { CardContent, Card } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProductCard({ product }) {
-  const { name, description, images, price } = product;
+  const { name, description, images, price, id } = product;
   return (
     <Card
       key={product.id}
@@ -27,7 +28,7 @@ export default function ProductCard({ product }) {
             size="sm"
             variant="outline"
           >
-            More Details
+            <Link href={`/product/${id}`}>More Details</Link>
           </Button>
         </div>
       </CardContent>

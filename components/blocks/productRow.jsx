@@ -28,6 +28,7 @@ export default function ProductsComponent() {
     fetchProducts();
   }, []);
 
+  console.log(products);
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 md:my-4">
       {isLoading
