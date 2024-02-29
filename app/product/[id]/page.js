@@ -50,8 +50,8 @@ const ProductPage = async ({ params }) => {
   return (
     <div>
       <Header />
-      <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start  px-20 mx-auto py-6">
-        <div className="grid gap-3 items-start px-28">
+      <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start  md:px-20 mx-auto p-4 md:py-6">
+        <div className="grid gap-3 items-start md:px-28">
           <ProductImages images={product.images} />
         </div>
         <div className="grid gap-4 md:gap-10 items-start">

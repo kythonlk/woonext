@@ -30,7 +30,7 @@ export default function ProductsComponent() {
 
   console.log(products);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 md:my-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4 p-2 md:p-4 md:my-4">
       {isLoading
         ? Array.from({ length: 10 }).map((_, index) => (
             <SkeletonProduct key={index} />

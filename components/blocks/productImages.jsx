@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 
 const ProductImageGallery = ({ images }) => {
   const [selectedImage, setSelectedImage] = useState(images[0].src);
@@ -11,7 +12,7 @@ const ProductImageGallery = ({ images }) => {
 
   return (
     <div className="grid gap-4">
-      <img
+      <Image
         alt="Main Product"
         className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
         src={selectedImage}
@@ -26,7 +27,7 @@ const ProductImageGallery = ({ images }) => {
             onClick={() => handleImageSelect(image.src)}
             aria-label={`View Image ${index + 1}`}
           >
-            <img
+            <Image
               alt={`Preview thumbnail ${index + 1}`}
               className="aspect-square object-cover"
               src={image.src}

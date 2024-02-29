@@ -33,7 +33,7 @@ export default function Navigation() {
               </Link>
             ))}
           </nav>
-          <div className="flex-1 min-w-0">
+          <div className="hidden md:flex flex-1  min-w-0">
             <form className="w-full flex md:ml-4">
               <Input
                 className="max-w-[400px] flex-1 md:mr-2"
