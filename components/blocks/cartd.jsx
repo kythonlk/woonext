@@ -1,72 +1,15 @@
 "use client";
 
-// import React from "react";
-// import { useCartStore } from "./cart";
-//
-// const CartDisplay = () => {
-//   const { items, removeItem, updateItemQuantity, clearCart } = useCartStore();
-//
-//   const handleQuantityChange = (event, id) => {
-//     const newQuantity = parseInt(event.target.value, 10);
-//     updateItemQuantity(id, newQuantity);
-//   };
-//
-//   return (
-//     <div className="p-4 max-w-md mx-auto">
-//       <h2 className="text-lg font-semibold mb-4">Your Cart</h2>
-//       {items.length > 0 ? (
-//         <ul>
-//           {items.map((item) => (
-//             <li key={item.id} className="mb-4">
-//               <div className="flex justify-between items-center">
-//                 <span className="font-medium">{item.name}</span>
-//                 <span>LKR {item.price}</span>
-//               </div>
-//               <div className="flex gap-2 mt-2">
-//                 <input
-//                   type="number"
-//                   className="border p-1 w-16 text-center"
-//                   value={item.quantity}
-//                   onChange={(e) => handleQuantityChange(e, item.id)}
-//                   min="1"
-//                 />
-//                 <button
-//                   className="bg-red-500 text-white p-1 rounded"
-//                   onClick={() => removeItem(item.id)}
-//                 >
-//                   Remove
-//                 </button>
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-//       ) : (
-//         <p>Your cart is empty.</p>
-//       )}
-//       {items.length > 0 && (
-//         <div className="mt-4">
-//           <button
-//             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-//             onClick={clearCart}
-//           >
-//             Clear Cart
-//           </button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-//
-// export default CartDisplay;
-
 import React from "react";
 import { useCartStore } from "./cart";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const CartDisplay = () => {
   const { items, removeItem, updateItemQuantity, clearCart } = useCartStore();
 
   const handleQuantityChange = (event, id) => {
-    const newQuantity = Math.max(1, parseInt(event.target.value, 10)); // Ensure quantity cannot go below 1
+    const newQuantity = Math.max(1, parseInt(event.target.value, 10));
     updateItemQuantity(id, newQuantity);
   };
 
@@ -77,31 +20,37 @@ const CartDisplay = () => {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto bg-white rounded-lg shadow">
+    <div className="p-4 md:p-8 md:my-20 max-w-6xl mx-auto bg-white rounded-lg shadow min-h-80">
       <h2 className="text-lg font-semibold mb-4">Your Cart</h2>
       {items.length > 0 ? (
         <>
           <ul>
             {items.map((item) => (
               <li key={item.id} className="mb-4">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium">{item.name}</span>
-                  <span>LKR {item.price}</span>
-                </div>
-                <div className="flex gap-2 mt-2 items-center">
-                  <input
-                    type="number"
-                    className="border p-1 w-16 text-center"
-                    value={item.quantity}
-                    onChange={(e) => handleQuantityChange(e, item.id)}
-                    min="1"
-                  />
-                  <button
-                    className="bg-red-500 text-white p-1 rounded hover:bg-red-700 transition-colors"
-                    onClick={() => removeItem(item.id)}
-                  >
-                    Remove
-                  </button>
+                <div className="grid lg:grid-cols-2">
+                  <div className="lg:flex gap-4">
+                    <span className="font-medium">{item.name}</span>
+                    <div className="font-medium px-2">LKR {item.price}</div>
+                  </div>
+                  <div className="lg:flex gap-4 justify-end">
+                    <input
+                      type="number"
+                      className="border p-1 w-16 text-center"
+                      value={item.quantity}
+                      onChange={(e) => handleQuantityChange(e, item.id)}
+                      min="1"
+                    />
+                    <Button
+                      className="bg-red-500"
+                      onClick={() => removeItem(item.id)}
+                      size="sm"
+                    >
+                      Remove
+                    </Button>
+                    <div className="font-bold px-2 w-60 text-right">
+                      Total: LKR {item.price * item.quantity}
+                    </div>
+                  </div>
                 </div>
               </li>
             ))}
@@ -109,17 +58,21 @@ const CartDisplay = () => {
           <div className="text-right font-semibold">
             Total: LKR {calculateTotalPrice()}
           </div>
-          <div className="mt-4 flex justify-end">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-              onClick={clearCart}
-            >
+          <div className="mt-12 flex justify-between">
+            <Button className=" transition-colors" onClick={clearCart}>
               Clear Cart
-            </button>
+            </Button>
+            <Button className="bg-blue-900 transition-colors">
+              <a href="/checkout">Checkout</a>
+            </Button>
           </div>
         </>
       ) : (
-        <p>Your cart is empty.</p>
+        <>
+          <div className="h-52">
+            <p className="font-bold my-auto">Your cart is empty.</p>
+          </div>
+        </>
       )}
     </div>
   );

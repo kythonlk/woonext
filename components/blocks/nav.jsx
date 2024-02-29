@@ -1,11 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useCartStore } from "@/components/blocks/cart";
 import { ShoppingBagIcon, SearchIcon, ShoppingCartIcon } from "lucide-react";
 import navData from "@/lib/nav.json";
 
 export default function Navigation() {
+  const totalQuantity = useCartStore((state) =>
+    state.items.reduce((total, item) => total + item.quantity, 0),
+  );
   return (
     <div>
       <span className="text-sm bg-black text-white w-full flex text-center py-1 justify-center">
@@ -13,8 +19,7 @@ export default function Navigation() {
       </span>
       <header className="sticky top-0 z-10 bg-white shadow dark:shadow-lg">
         <div className="flex items-center justify-between h-16 px-4 md:px-6">
-          <Link className="flex-col pr-8" href="#">
-            {/* <ShoppingBagIcon className="h-6 w-6 mx-auto" /> */}
+          <Link className="flex-col pr-8" href="/">
             <p className="text-2xl font-bold">Crizalapparel</p>
           </Link>
           <nav className="hidden space-x-8 md:flex flex-1 min-w-0 items-center text-sm font-medium">
@@ -55,9 +60,7 @@ export default function Navigation() {
               href={navData.shoppingCart.href}
             >
               <ShoppingCartIcon className="h-6 w-6 hover:bg-gray-100 bg-gray-100 rounded-lg" />
-              <Badge className="ml-auto mb-4">
-                {navData.shoppingCart.itemsCount}
-              </Badge>
+              <Badge className="ml-auto mb-4">{totalQuantity}</Badge>
             </Link>
           </div>
         </div>

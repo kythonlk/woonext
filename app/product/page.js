@@ -1,18 +1,16 @@
-import AddToCartButton from "@/components/blocks/addtocart";
+import ProductRow from "@/components/blocks/productRow";
+import Header from "@/components/blocks/header";
+import Footer from "@/components/blocks/footer";
 
-const ProductPage = () => {
-  const product = {
-    id: 4,
-    name: "Awesome Product",
-    price: 260,
-    description: "This is an awesome product description.",
-  };
-
+const ProductsPage = () => {
   return (
-    <div className="max-w-md mx-auto bg-white shadow-md overflow-hidden md:max-w-2xl">
-      <AddToCartButton product={product} />
+    <div>
+      <Header />
+      <ProductRow />
+      <ProductRow />
+      <Footer />
     </div>
   );
 };
 
-export default ProductPage;
+export default ProductsPage;

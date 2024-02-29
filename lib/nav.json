@@ -1,8 +1,8 @@
 {
   "menuItems": [
     {
-      "label": "Clothing",
-      "href": "#"
+      "label": "Products",
+      "href": "/product"
     },
     {
       "label": "Electronics",
@@ -29,7 +29,7 @@
   ],
   "shoppingCart": {
     "label": "Shopping cart",
-    "href": "#",
+    "href": "/cart",
     "itemsCount": 0
   }
 }

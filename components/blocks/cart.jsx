@@ -12,15 +12,18 @@ export const useCartStore = create(
             (item) => item.id === itemToAdd.id,
           );
           if (existItemIndex !== -1) {
-            const newQuantity = state.items[existItemIndex].quantity + 1;
-            let newItems = [...state.items];
-            newItems[existItemIndex] = {
-              ...newItems[existItemIndex],
-              quantity: newQuantity,
-            };
-            return { items: newItems };
+            const updatedItems = state.items.map((item, index) => {
+              if (index === existItemIndex) {
+                return {
+                  ...item,
+                  quantity: item.quantity + itemToAdd.quantity,
+                };
+              }
+              return item;
+            });
+            return { items: updatedItems };
           } else {
-            return { items: [...state.items, { ...itemToAdd, quantity: 1 }] };
+            return { items: [...state.items, itemToAdd] };
           }
         }),
 
