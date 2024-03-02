@@ -7,34 +7,6 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/blocks/header";
 import Footer from "@/components/blocks/footer";
 
-async function fetchMenuData() {
-  const adminUsername = "dev";
-  const adminPassword = process.env.NEXT_PUBLIC_WP_APP;
-
-  const endpoint = `${process.env.NEXT_PUBLIC_WP}/menus`;
-  const base64Credentials = Buffer.from(
-    `${adminUsername}:${adminPassword}`,
-  ).toString("base64");
-
-  try {
-    const response = await fetch(endpoint, {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${base64Credentials}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log("Menu Data:", data);
-  } catch (error) {
-    console.error("Error fetching menu data:", error);
-  }
-}
-
 export default function LoginForm() {
   return (
     <>
@@ -69,7 +41,7 @@ export default function LoginForm() {
               </div>
               <Input id="password" required type="password" />
             </div>
-            <Button className="w-full" type="submit" onClick={fetchMenuData}>
+            <Button className="w-full" type="submit">
               Login
             </Button>
             <Button className="w-full" variant="outline">
