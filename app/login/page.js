@@ -49,7 +49,7 @@ export default function LoginForm() {
             </Button>
           </div>
           <div className="space-y-4 text-center text-sm">
-            Don't have an account?
+            Don t have an account?
             <Link className="underline ml-2" href="./sign-up">
               Sign up
             </Link>
