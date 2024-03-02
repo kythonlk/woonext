@@ -27,8 +27,8 @@ export default function Navigation() {
       </span>
       <header className="sticky top-0 z-10 bg-white shadow dark:shadow-lg">
         <div className="flex items-center justify-between h-16 px-4 md:px-6">
-          <Link className="flex-col pr-8" href="/">
-            <p className="text-2xl font-bold">Crizalapparel</p>
+          <Link className="flex-col pr-4 md:pr-8" href="/">
+            <p className="text-xl md:text-2xl font-bold">Crizalapparel</p>
           </Link>
           <nav className="hidden space-x-8 md:flex flex-1 min-w-0 items-center text-sm font-medium">
             {navData.menuItems.map((item) => (
