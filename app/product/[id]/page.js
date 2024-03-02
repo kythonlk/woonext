@@ -39,14 +39,13 @@ const ProductPage = async ({ params }) => {
     { id: "size-xl", value: "xl", label: "XL" },
   ];
 
-  const quantityOptions = [1, 2, 3, 4, 5];
-
   const addtocartbutton = {
     id: product.id,
     name: product.name,
     price: product.price,
   };
 
+  console.log(product);
   return (
     <div>
       <Header />
@@ -56,7 +55,12 @@ const ProductPage = async ({ params }) => {
         </div>
         <div className="grid gap-4 md:gap-10 items-start">
           <div className=" items-start">
-            <div className="text-4xl font-bold my-8">LKR {product.price}</div>
+            <div className="text-4xl font-bold my-8">
+              LKR {product.price}
+              <span className="line-through text-gray-500 ml-8">
+                {product.regular_price}
+              </span>
+            </div>
             <div className="grid gap-4">
               <h1 className="font-bold text-2xl sm:text-3xl">{product.name}</h1>
               <div>

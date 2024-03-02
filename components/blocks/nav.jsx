@@ -1,17 +1,25 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/components/blocks/cart";
-import { ShoppingBagIcon, SearchIcon, ShoppingCartIcon } from "lucide-react";
+import { SearchIcon, ShoppingCartIcon } from "lucide-react";
 import navData from "@/lib/nav.json";
 
 export default function Navigation() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const router = useRouter();
   const totalQuantity = useCartStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0),
   );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    router.push(`./products?search=${encodeURIComponent(searchTerm)}`);
+  };
   return (
     <div>
       <span className="text-sm bg-black text-white w-full flex text-center py-1 justify-center">
@@ -34,11 +42,13 @@ export default function Navigation() {
             ))}
           </nav>
           <div className="hidden md:flex flex-1  min-w-0">
-            <form className="w-full flex md:ml-4">
+            <form className="w-full flex md:ml-4" onSubmit={handleSubmit}>
               <Input
                 className="max-w-[400px] flex-1 md:mr-2"
                 placeholder="Search for products..."
                 type="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Button type="submit" variant="outline">
                 <SearchIcon className="h-4 w-4" />

@@ -2,7 +2,7 @@
   "menuItems": [
     {
       "label": "Products",
-      "href": "/product"
+      "href": "./product"
     },
     {
       "label": "Electronics",
@@ -19,17 +19,16 @@
   ],
   "accountActions": [
     {
-      "label": "Sign in",
-      "href": "#"
+      "label": "Login",
+      "href": "./login"
     },
     {
       "label": "Sign up",
-      "href": "#"
+      "href": "./sign-up"
     }
   ],
   "shoppingCart": {
     "label": "Shopping cart",
-    "href": "/cart",
-    "itemsCount": 0
+    "href": "./cart"
   }
 }

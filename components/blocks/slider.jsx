@@ -21,7 +21,7 @@ export default function Slider() {
                 <CardContent
                   className="bg-img flex items-center justify-center p-4 h-[800px]"
                   style={{
-                    backgroundImage: `url(https://dev.zamaro.ae/wp-content/uploads/2024/02/photo-1580682312385-e94d8de1cf3c-scaled.jpeg)`,
+                    backgroundImage: `url(/slider.jpeg)`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
