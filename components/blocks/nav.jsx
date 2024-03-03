@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -12,10 +12,16 @@ import navData from "@/lib/nav.json";
 
 export default function Navigation() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const totalQuantity = useCartStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0),
   );
+  useEffect(() => {
+    const sessionKey = localStorage.getItem("base64Credentials");
+    setIsLoggedIn(!!sessionKey);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     router.push(`./products?search=${encodeURIComponent(searchTerm)}`);
@@ -56,15 +62,21 @@ export default function Navigation() {
             </form>
           </div>
           <div className="flex items-center space-x-4">
-            {navData.accountActions.map((action) => (
-              <Link
-                className="text-sm font-medium"
-                href={action.href}
-                key={action.label}
-              >
-                {action.label}
+            {isLoggedIn ? (
+              <Link className="text-sm font-medium" href="/account">
+                Account
               </Link>
-            ))}
+            ) : (
+              navData.accountActions.map((action) => (
+                <Link
+                  className="text-sm font-medium"
+                  href={action.href}
+                  key={action.label}
+                >
+                  {action.label}
+                </Link>
+              ))
+            )}
             <Link
               className="rounded-lg flex items-center justify-center"
               href={navData.shoppingCart.href}

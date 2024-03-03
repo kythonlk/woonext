@@ -1,3 +1,7 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,56 +23,108 @@ import {
 } from "lucide-react";
 import AccountTable from "@/components/blocks/accounttable";
 
+const navItems = [
+  {
+    href: "#home",
+    label: "Home",
+    icon: HomeIcon,
+  },
+  {
+    href: "#orders",
+    label: "Orders",
+    icon: ShoppingCartIcon,
+    badge: 12,
+  },
+  {
+    href: "#products",
+    label: "Products",
+    icon: PackageIcon,
+  },
+  {
+    href: "#customers",
+    label: "Customers",
+    icon: UsersIcon,
+  },
+  {
+    href: "#analytics",
+    label: "Analytics",
+    icon: LineChartIcon,
+  },
+];
+
 export default function Component() {
+  const [userData, setUserData] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const base64Credentials = localStorage.getItem("base64Credentials");
+    if (!base64Credentials) {
+      console.log("No session found, redirecting to login");
+      router.push("/login");
+      return;
+    }
+
+    const fetchUserData = async () => {
+      const loginEndpoint = `${process.env.NEXT_PUBLIC_WP}/users`;
+      try {
+        const response = await fetch(loginEndpoint, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${base64Credentials}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [router]);
+
+  if (!userData) return null;
+
+  const avatar = userData[0].avatar_urls[48];
+  const name = userData[0].name;
+  console.log(avatar);
+
+  const handleLogout = () => {
+    localStorage.removeItem("base64Credentials");
+    router.push("/login");
+  };
   return (
     <div className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
         <div className="flex flex-col gap-2">
           <div className="flex h-[60px] items-center px-6">
             <Link className="flex items-center gap-2 font-semibold" href="#">
-              <span className="text-xl">Account</span>
+              <span className="text-xl">Hello, {name}</span>
             </Link>
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-4 text-sm font-medium">
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
-              >
-                <HomeIcon className="h-4 w-4" />
-                Home
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900  transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
-                href="#"
-              >
-                <ShoppingCartIcon className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  12
-                </Badge>
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
-              >
-                <PackageIcon className="h-4 w-4" />
-                Products
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
-              >
-                <UsersIcon className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                href="#"
-              >
-                <LineChartIcon className="h-4 w-4" />
-                Analytics
-              </Link>
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 ${item.badge ? "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-50" : ""}`}
+                >
+                  <item.icon className="h-4 w-4" />
+                  {item.label}
+                  {item.badge && (
+                    <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+                      {item.badge}
+                    </Badge>
+                  )}
+                </Link>
+              ))}
             </nav>
           </div>
         </div>
@@ -85,7 +141,7 @@ export default function Component() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
+                className="rounded-full border w-8 h-8"
                 size="icon"
                 variant="ghost"
               >
@@ -93,7 +149,7 @@ export default function Component() {
                   alt="Avatar"
                   className="rounded-full"
                   height="32"
-                  src="/placeholder.svg"
+                  src={avatar}
                   style={{
                     aspectRatio: "32/32",
                     objectFit: "cover",
@@ -109,7 +165,7 @@ export default function Component() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
