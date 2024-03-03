@@ -89,7 +89,13 @@ export default function Component() {
     fetchUserData();
   }, [router]);
 
-  if (!userData) return null;
+  if (!userData)
+    return (
+      <>
+        <div className="flex p-8"> create new account or login</div>
+        <Link href={"./login"}>login</Link>
+      </>
+    );
 
   const avatar = userData[0].avatar_urls[48];
   const name = userData[0].name;
@@ -148,13 +154,13 @@ export default function Component() {
                 <img
                   alt="Avatar"
                   className="rounded-full"
-                  height="32"
+                  height="48"
                   src={avatar}
                   style={{
-                    aspectRatio: "32/32",
+                    aspectRatio: "48/48",
                     objectFit: "cover",
                   }}
-                  width="32"
+                  width="48"
                 />
                 <span className="sr-only">Toggle user menu</span>
               </Button>
