@@ -5,15 +5,45 @@
       "href": "./products"
     },
     {
-      "label": "Electronics",
+      "label": "Branded Ware",
       "href": "#"
     },
     {
-      "label": "Baby",
+      "label": "Promotional ware",
       "href": "#"
     },
     {
-      "label": "Automotive",
+      "label": "Mens wear",
+      "href": "#"
+    },
+    {
+      "label": "Womens wear",
+      "href": "#"
+    },
+    {
+      "label": "Couple T shirts",
+      "href": "#"
+    }
+  ],
+  "subMenuItems": [
+    {
+      "label": "Branded ware",
+      "href": "#"
+    },
+    {
+      "label": "Promotional ware",
+      "href": "#"
+    },
+    {
+      "label": "Mens wear",
+      "href": "#"
+    },
+    {
+      "label": "Womens wear",
+      "href": "#"
+    },
+    {
+      "label": "Couple T shirts",
       "href": "#"
     }
   ],
