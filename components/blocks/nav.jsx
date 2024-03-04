@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,8 +11,12 @@ import { SearchIcon, ShoppingCartIcon } from "lucide-react";
 import navData from "@/lib/nav.json";
 
 export default function Navigation() {
-  const [searchTerm, setSearchTerm] = useState("");
+  // const [searchTerm, setSearchTerm] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || "",
+  );
   const router = useRouter();
   const totalQuantity = useCartStore((state) =>
     state.items.reduce((total, item) => total + item.quantity, 0),
@@ -20,12 +24,15 @@ export default function Navigation() {
   useEffect(() => {
     const sessionKey = localStorage.getItem("base64Credentials");
     setIsLoggedIn(!!sessionKey);
-  }, []);
+    const newSearchTerm = searchParams.get("search") || "";
+    setSearchTerm(newSearchTerm);
+  }, [searchParams]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    router.push(`./products?search=${encodeURIComponent(searchTerm)}`);
+    router.push(`/products?search=${encodeURIComponent(searchTerm)}`);
   };
+
   return (
     <div>
       <span className="text-sm bg-black text-white w-full flex text-center py-1 justify-center">

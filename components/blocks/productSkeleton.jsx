@@ -5,7 +5,7 @@ import { CardContent, Card } from "@/components/ui/card";
 
 export default function ProductCard() {
   return (
-    <Card className="rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto hover:shadow-xl transition-all duration-200">
+    <Card className="rounded-lg overflow-hidden shadow-lg max-w-[300px] mx-auto hover:shadow-xl transition-all duration-200">
       <div className="flex items-center justify-center m-2">
         <Skeleton className="h-72 w-72 rounded" />
       </div>

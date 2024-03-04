@@ -8,7 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Slider() {
   return (
@@ -28,7 +29,14 @@ export default function Slider() {
                     borderRadius: "0.5rem",
                   }}
                 >
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                  <div className="w-full h-full flex flex-col items-center justify-center">
+                    <p className="text-4xl font-semibold">
+                      Most Popular Products
+                    </p>
+                    <Link href="./products" className="text-xl font-semibold">
+                      <Button className="my-4">View All</Button>
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             </div>

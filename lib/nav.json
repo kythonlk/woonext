@@ -2,7 +2,7 @@
   "menuItems": [
     {
       "label": "Products",
-      "href": "./product"
+      "href": "./products"
     },
     {
       "label": "Electronics",
