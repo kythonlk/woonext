@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import ProductSet from "@/components/blocks/productset";
 import SkeletonSet from "@/components/blocks/skeletenset";
 import ProductNotFound from "@/components/blocks/productnotfound";
@@ -9,6 +9,7 @@ import Sort from "@/components/blocks/sort";
 import Filter from "@/components/blocks/productsside";
 import Header from "@/components/blocks/header";
 import Footer from "@/components/blocks/footer";
+import getProducts from "@/actions/getproducts";
 
 export default function ProductsAll() {
   const [products, setProducts] = useState([]);
@@ -22,12 +23,11 @@ export default function ProductsAll() {
     const fetchAndSortProducts = async () => {
       setIsLoading(true);
       const searchTerm = searchParams.get("search") || "";
-      let url = `${process.env.NEXT_PUBLIC_WP_REST}/products/?consumer_key=${process.env.NEXT_PUBLIC_WOO_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_WOO_SECRET}&per_page=30&search=${encodeURIComponent(searchTerm)}`;
+      const page = 30;
+      const products = await getProducts(searchTerm, page);
 
       try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Data could not be fetched!");
-        let fetchedProducts = await response.json();
+        let fetchedProducts = products;
 
         switch (sort) {
           case "Newest":
@@ -74,7 +74,7 @@ export default function ProductsAll() {
   }, [searchParams, sort, priceFilter, categoryFilter]);
 
   return (
-    <div>
+    <Suspense fallback={<div>Loading...</div>}>
       <Header />
       <div className="grid md:grid-cols-[280px_1fr] items-start">
         <div className="hidden md:flex flex-col gap-4 items-start py-2 mt-20">
@@ -97,6 +97,6 @@ export default function ProductsAll() {
         </div>
       </div>
       <Footer />
-    </div>
+    </Suspense>
   );
 }
