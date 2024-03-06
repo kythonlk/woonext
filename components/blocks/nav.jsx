@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -56,13 +56,17 @@ export default function Navigation() {
           </nav>
           <div className="hidden md:flex flex-1  min-w-0">
             <form className="w-full flex md:ml-4" onSubmit={handleSubmit}>
-              <Input
-                className="max-w-[400px] flex-1 md:mr-2"
-                placeholder="Search for products..."
-                type="search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <Suspense
+                fallback={<Input className="max-w-[400px] flex-1 md:mr-2" />}
+              >
+                <Input
+                  className="max-w-[400px] flex-1 md:mr-2"
+                  placeholder="Search for products..."
+                  type="search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </Suspense>
               <Button type="submit" variant="outline">
                 <SearchIcon className="h-4 w-4" />
               </Button>

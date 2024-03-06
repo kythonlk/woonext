@@ -23,7 +23,7 @@ export default function ProductsAll() {
     const fetchAndSortProducts = async () => {
       setIsLoading(true);
       const searchTerm = searchParams.get("search") || "";
-      const page = 30;
+      const page = 20;
       const products = await getProducts(searchTerm, page);
 
       try {
@@ -74,8 +74,10 @@ export default function ProductsAll() {
   }, [searchParams, sort, priceFilter, categoryFilter]);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Header />
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Header />
+      </Suspense>
       <div className="grid md:grid-cols-[280px_1fr] items-start">
         <div className="hidden md:flex flex-col gap-4 items-start py-2 mt-20">
           <Filter
@@ -97,6 +99,6 @@ export default function ProductsAll() {
         </div>
       </div>
       <Footer />
-    </Suspense>
+    </>
   );
 }
