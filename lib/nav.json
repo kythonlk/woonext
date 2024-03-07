@@ -50,15 +50,15 @@
   "accountActions": [
     {
       "label": "Login",
-      "href": "./login"
+      "href": "/login"
     },
     {
       "label": "Sign up",
-      "href": "./sign-up"
+      "href": "/sign-up"
     }
   ],
   "shoppingCart": {
     "label": "Shopping cart",
-    "href": "./cart"
+    "href": "/cart"
   }
 }

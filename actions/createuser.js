@@ -1,26 +1,19 @@
 "use server";
 
-export async function updateUser(userid, formData) {
+export async function updateUser(formData) {
   console.log(formData);
 
   const { username, email, password } = formData;
-  const roles = "customer";
-  const adminUsername = "dev";
-  const adminPassword = process.env.NEXT_PUBLIC_WP_APP;
 
-  const endpoint = `${process.env.NEXT_PUBLIC_WP}/users`;
-  const base64Credentials = Buffer.from(
-    `${adminUsername}:${adminPassword}`,
-  ).toString("base64");
+  const url = `${process.env.NEXT_PUBLIC_WP_REST}/customers/?consumer_key=${process.env.NEXT_PUBLIC_WOO_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_WOO_SECRET}`;
 
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Basic ${base64Credentials}`,
       },
-      body: JSON.stringify({ username, email, password, roles }),
+      body: JSON.stringify({ username, email, password }),
     });
 
     if (!response.ok) {

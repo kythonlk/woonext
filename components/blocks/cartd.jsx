@@ -18,7 +18,7 @@ const CartDisplay = () => {
       .reduce((total, item) => total + item.price * item.quantity, 0)
       .toFixed(2);
   };
-
+  console.log(items.map((item) => item.price));
   return (
     <div className="p-4 md:p-8 md:my-20 max-w-6xl mx-auto bg-white rounded-lg shadow min-h-80">
       <h2 className="text-lg font-semibold mb-4">Your Cart</h2>

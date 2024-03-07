@@ -6,24 +6,24 @@ import { Separator } from "@/components/ui/separator";
 import ProductImages from "@/components/blocks/productImages";
 import Footer from "@/components/blocks/footer";
 import AddToCartButton from "@/components/blocks/addtocart";
+import Productsdata from "@/actions/productdata";
 
 const ProductPage = async ({ params }) => {
+  console.log(params.slug);
+  const slug = params.slug;
   let product;
 
   try {
-    const url = `${process.env.NEXT_PUBLIC_WP_REST}/products/${params.id}/?consumer_key=${process.env.NEXT_PUBLIC_WOO_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_WOO_SECRET}`;
-    const response = await fetch(url);
-    console.log("response", url);
-    if (!response.ok) {
-      throw new Response("Product not found", { status: 404 });
-    }
-
-    product = await response.json();
+    product = await Productsdata(slug);
   } catch (error) {
     console.error("Failed to fetch product:", error);
 
     return <div className="bg-white">Product not found</div>;
   }
+
+  // if (!product.images || product.images.length === 0) {
+  //   return <div className="bg-white">Product not found</div>;
+  // }
 
   const colorOptions = [
     { id: "color-black", value: "black", label: "Black" },
@@ -39,33 +39,48 @@ const ProductPage = async ({ params }) => {
     { id: "size-xl", value: "xl", label: "XL" },
   ];
 
+  if (!product[0].id == undefined) {
+    return <div className="bg-white">Product not found</div>;
+  }
+
   const addtocartbutton = {
-    id: product.id,
-    name: product.name,
-    price: product.price,
+    id: product[0].id,
+    name: product[0].name,
+    price: product[0].price,
   };
 
-  console.log(product);
+  console.log(product[0].id);
   return (
     <div>
       <Header />
       <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start  md:px-20 mx-auto p-4 md:py-6">
         <div className="grid gap-3 items-start md:px-28">
-          <ProductImages images={product.images} />
+          {product[0].images == undefined && (
+            <ProductImages
+              images={[
+                "https://dev.zamaro.ae/wp-content/uploads/woocommerce-placeholder.png",
+              ]}
+            />
+          )}
+          {(product[0].images || []).length > 0 && (
+            <ProductImages images={product[0].images} />
+          )}
         </div>
         <div className="grid gap-4 md:gap-10 items-start">
           <div className=" items-start">
             <div className="text-4xl font-bold my-8">
-              LKR {product.price}
+              LKR {product[0].price}
               <span className="line-through text-gray-500 ml-8">
-                {product.regular_price}
+                {product[0].regular_price}
               </span>
             </div>
             <div className="grid gap-4">
-              <h1 className="font-bold text-2xl sm:text-3xl">{product.name}</h1>
+              <h1 className="font-bold text-2xl sm:text-3xl">
+                {product[0].name}
+              </h1>
               <div>
                 <p>
-                  {product.categories
+                  {product[0].categories
                     .map((category) => category.name)
                     .join(", ")}
                 </p>
@@ -125,7 +140,7 @@ const ProductPage = async ({ params }) => {
           <Separator />
           <div className="grid gap-4 text-sm leading-loose">
             <div
-              dangerouslySetInnerHTML={{ __html: product.description }}
+              dangerouslySetInnerHTML={{ __html: product[0].description }}
             ></div>
           </div>
         </div>
@@ -136,3 +151,12 @@ const ProductPage = async ({ params }) => {
 };
 
 export default ProductPage;
+
+export async function generateStaticVParams() {
+  const url = `${process.env.NEXT_PUBLIC_WP_REST}/products/?consumer_key=${process.env.NEXT_PUBLIC_WOO_KEY}&consumer_secret=${process.env.NEXT_PUBLIC_WOO_SECRET}`;
+  const posts = await fetch(url).then((res) => res.json());
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}

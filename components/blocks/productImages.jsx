@@ -4,6 +4,19 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 const ProductImageGallery = ({ images }) => {
+  if (!images || images.length === 0) {
+    return (
+      <div className="grid gap-4">
+        <Image
+          alt="Main Product"
+          className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+          src="https://dev.zamaro.ae/wp-content/uploads/woocommerce-placeholder.png"
+          height={600}
+          width={600}
+        />
+      </div>
+    );
+  }
   const [selectedImage, setSelectedImage] = useState(images[0].src);
 
   const handleImageSelect = (imageSrc) => {

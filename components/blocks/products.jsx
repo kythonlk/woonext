@@ -5,8 +5,11 @@ import Link from "next/link";
 import AddToCartButton from "./cartbutton";
 
 export default function ProductCard({ product }) {
-  const { name, description, images, price, id, regular_price } = product;
+  const { name, images, price, id, regular_price, slug } = product;
 
+  if (!name || !price || !slug || !id || !regular_price) {
+    return null;
+  }
   const productData = {
     id: id,
     name: name,
@@ -17,9 +20,32 @@ export default function ProductCard({ product }) {
   return (
     <Card
       key={product.id}
-      className="rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto hover:shadow-xl transition-all duration-200"
+      className="rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto lg:max-h-[500px] hover:shadow-xl transition-all duration-200"
     >
-      <Image src={images[0].src} alt={name} width={320} height={320} />
+      <Link href={`/product/${slug}`} passHref>
+        <div className="min-w-[220px] lg:min-w-[250px] 2xl:min-w-[300px] max-h-[200px] lg:max-h-[250px] 2xl:max-h-[350px] ">
+          {images.length > 0 && (
+            <Image
+              src={images[0].src}
+              alt={name}
+              width={300}
+              height={300}
+              layout="responsive"
+              className="min-w-full max-h-[250px] lg:max-h-[250px] 2xl:max-h-[300px] object-cover"
+            />
+          )}
+          {(!images || images.length === 0) && (
+            <Image
+              src="https://dev.zamaro.ae/wp-content/uploads/woocommerce-placeholder.png"
+              alt={name}
+              width={320}
+              height={320}
+              layout="responsive"
+              className="min-w-full max-h-[250px] lg:max-h-[250px] 2xl:max-h-[300px] object-cover"
+            />
+          )}
+        </div>
+      </Link>
       <CardContent className="p-4">
         <h2 className="text-lg font-bold hover:text-gray-700 transition-all duration-200">
           {name}
@@ -37,7 +63,7 @@ export default function ProductCard({ product }) {
             size="sm"
             variant="outline"
           >
-            <Link href={`/product/${id}`}>More Details</Link>
+            <Link href={`/product/${slug}`}>More Details</Link>
           </Button>
         </div>
       </CardContent>

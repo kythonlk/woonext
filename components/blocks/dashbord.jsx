@@ -99,7 +99,7 @@ export default function Component() {
 
   const avatar = userData[0].avatar_urls[48];
   const name = userData[0].name;
-  console.log(avatar);
+  console.log(avatar + " " + name);
 
   const handleLogout = () => {
     localStorage.removeItem("base64Credentials");

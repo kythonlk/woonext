@@ -19,7 +19,7 @@ export default function LoginForm() {
 
     const base64Credentials = btoa(`${username}:${password}`);
     localStorage.setItem("base64Credentials", base64Credentials);
-    const loginEndpoint = `${process.env.NEXT_PUBLIC_WP}/users`;
+    const loginEndpoint = `${process.env.NEXT_PUBLIC_WP}/users/${username}`;
 
     try {
       console.log(base64Credentials, username, password);
