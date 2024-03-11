@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { updateUser } from "@/actions/createuser";
 import Header from "@/components/blocks/header";
@@ -13,7 +12,6 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -44,9 +42,9 @@ export default function RegisterForm() {
   });
 
   const onSubmitInitialForm = async (values) => {
-    setRegistrationData(values); // Store registration data
+    setRegistrationData(values);
     console.log(values);
-    setStep(2); // Move to next step to fill address
+    setStep(2);
   };
 
   const onSubmitFinal = async (addressValues) => {
